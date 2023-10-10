@@ -1,9 +1,11 @@
 package com.gptp.jirawebapp.components.user;
 
+import com.gptp.jirawebapp.utilities.JWT;
+import com.gptp.jirawebapp.utilities.JWTContent;
 import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +14,13 @@ import com.gptp.jirawebapp.data.User;
 @org.springframework.stereotype.Controller
 @RequestMapping("/api/user")
 public class Controller {
-    @Autowired
-    private Repository repository;
+    private final Repository repository;
+    private final JWT jwt;
+
+    public Controller(Repository repository, JWT jwt) {
+        this.repository = repository;
+        this.jwt = jwt;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
@@ -33,13 +40,23 @@ public class Controller {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody User user) {
+    public ResponseEntity<String> loginUser(@RequestBody User user) throws Exception {
         User storedUser = repository.findByUsername(user.getUsername());
 
         if (storedUser == null || !BCrypt.checkpw(user.getPassword(), storedUser.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
 
-        return ResponseEntity.ok("Login successful");
+        String userId = storedUser.getId().toString();
+        JWTContent content = new JWTContent(userId);
+        String token = jwt.encode(content);
+
+        return ResponseEntity.ok(token);
+    }
+
+    @PostMapping("/testToken")
+    public ResponseEntity<String> testToken() {
+        SecurityContextHolder.getContext();
+        return ResponseEntity.ok("Hello");
     }
 }
