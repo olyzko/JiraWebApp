@@ -5,6 +5,7 @@ import com.gptp.jirawebapp.utilities.JWTContent;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,7 +41,7 @@ public class Controller {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody User user) throws Exception {
+    public ResponseEntity<String> loginUser(@RequestBody User user) {
         User storedUser = repository.findByUsername(user.getUsername());
 
         if (storedUser == null || !BCrypt.checkpw(user.getPassword(), storedUser.getPassword())) {
@@ -56,7 +57,8 @@ public class Controller {
 
     @PostMapping("/testToken")
     public ResponseEntity<String> testToken() {
-        SecurityContextHolder.getContext();
-        return ResponseEntity.ok("Hello");
+        SecurityContext context = SecurityContextHolder.getContext();
+        JWTContent principal = (JWTContent) context.getAuthentication().getPrincipal();
+        return ResponseEntity.ok(principal.getUserId());
     }
 }

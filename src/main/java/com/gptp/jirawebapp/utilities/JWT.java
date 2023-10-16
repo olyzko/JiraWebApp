@@ -16,11 +16,11 @@ public class JWT {
         key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String encode(JWTContent content) throws Exception {
+    public String encode(JWTContent content) {
         return Jwts.builder().claim("userId", content.userId).signWith(key).compact();
     }
 
-    public JWTContent decode(String token) throws Exception {
+    public JWTContent decode(String token) {
         Claims claims = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
         String userId = claims.get("userId", String.class);
         return new JWTContent(userId);
