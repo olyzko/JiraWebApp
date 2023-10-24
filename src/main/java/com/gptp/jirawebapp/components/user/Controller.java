@@ -30,6 +30,10 @@ public class Controller {
             return ResponseEntity.badRequest().body("Username already exists");
         }
 
+        // todo: remove
+        user.setFirstName("");
+        user.setLastName("");
+
         // Hash the user's password using BCrypt
         String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
         user.setPassword(hashedPassword);

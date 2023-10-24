@@ -28,6 +28,13 @@ public class User {
     @Column(name = "password", length = 256)
     private String password;
 
+    @Column(name= "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+
     @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
     private Set<Project> projects = new HashSet<>();
 
