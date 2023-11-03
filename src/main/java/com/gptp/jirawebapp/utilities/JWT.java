@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -22,8 +24,13 @@ public class JWT {
 
     public JWTContent decode(String token) {
         Claims claims = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
-        String userId = claims.get("userId", String.class);
+        Long userId = claims.get("userId", Long.class);
         return new JWTContent(userId);
+    }
+
+    public JWTContent context() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        return (JWTContent) context.getAuthentication().getPrincipal();
     }
 }
 

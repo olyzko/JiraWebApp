@@ -1,5 +1,6 @@
 package com.gptp.jirawebapp.data;
 
+import com.gptp.jirawebapp.components.user.UserDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
-    private User creator;
+    private UserDto creator;
 
     @ManyToOne
     @JoinColumn(name = "issue_id")

@@ -1,5 +1,7 @@
 package com.gptp.jirawebapp.data;
 
+import com.gptp.jirawebapp.components.project.ProjectDto;
+import com.gptp.jirawebapp.components.user.UserDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +30,7 @@ public class Issue {
 
     @ManyToOne
     @JoinColumn(name = "project_id")
-    private Project project;
+    private ProjectDto project;
 
     @Column(name = "creator_id")
     private Long creatorId;
@@ -46,7 +48,7 @@ public class Issue {
 
     @ManyToOne
     @JoinColumn(name = "assignee_id")
-    private User assignee;
+    private UserDto assignee;
 
     @Column(name = "status")
     private String status;
@@ -58,5 +60,5 @@ public class Issue {
     private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
-    private Set<IssueUserRole> issueUserRoles = new HashSet<>();
+    private Set<IssueUser> issueUsers = new HashSet<>();
 }

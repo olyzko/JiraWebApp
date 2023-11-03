@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class JWTContent {
-    String userId;
+    Long userId;
 
-    public JWTContent(String userId) {
+    public JWTContent(Long userId) {
         this.userId = userId;
     }
 }

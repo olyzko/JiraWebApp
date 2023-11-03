@@ -1,30 +1,24 @@
 package com.gptp.jirawebapp.data;
 
+import com.gptp.jirawebapp.components.user.UserDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "issue_user_role")
+@Table(name = "issue_user")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class IssueUserRole {
-
+public class IssueUser {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @ManyToOne
     @JoinColumn(name = "issue_id")
     private Issue issue;
 
+    @Id
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    private UserDto user;
 }

@@ -1,5 +1,7 @@
-package com.gptp.jirawebapp.data;
+package com.gptp.jirawebapp.components.project;
 
+import com.gptp.jirawebapp.components.user.UserDto;
+import com.gptp.jirawebapp.data.Issue;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +16,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Project {
+public class ProjectDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +24,7 @@ public class Project {
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
-    private User creator;
+    private UserDto creator;
 
     @Column(name = "name")
     private String name;
