@@ -42,7 +42,7 @@ public class UserDto {
 
 
     @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
-    private Set<ProjectDto> projects = new HashSet<>();
+    private Set<ProjectDto> createdProjects = new HashSet<>();
 
     @OneToMany(mappedBy = "assignee", cascade = CascadeType.ALL)
     private Set<Issue> issues = new HashSet<>();

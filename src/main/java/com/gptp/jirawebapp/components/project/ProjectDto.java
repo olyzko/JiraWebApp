@@ -46,5 +46,4 @@ public class ProjectDto {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set<Issue> issues = new HashSet<>();
-
 }
