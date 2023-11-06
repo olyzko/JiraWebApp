@@ -4,6 +4,7 @@ import com.gptp.jirawebapp.components.user.UserDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
@@ -23,6 +24,7 @@ public class Attachment {
     @JoinColumn(name = "creator_id")
     private UserDto creator;
 
+    @EqualsAndHashCode.Exclude
     @ManyToOne
     @JoinColumn(name = "issue_id")
     private Issue issue;

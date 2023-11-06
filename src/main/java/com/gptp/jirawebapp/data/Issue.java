@@ -3,9 +3,7 @@ package com.gptp.jirawebapp.data;
 import com.gptp.jirawebapp.components.project.ProjectDto;
 import com.gptp.jirawebapp.components.user.UserDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -14,6 +12,7 @@ import java.util.Set;
 @Entity
 @Table(name = "issue")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Issue {
@@ -53,12 +52,15 @@ public class Issue {
     @Column(name = "status")
     private String status;
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
     private Set<Attachment> attachments = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
     private Set<Comment> comments = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
     private Set<IssueUser> issueUsers = new HashSet<>();
 }
