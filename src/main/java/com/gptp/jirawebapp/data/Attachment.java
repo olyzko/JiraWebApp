@@ -33,7 +33,8 @@ public class Attachment {
     @Column(name = "upload_date")
     private Date uploadDate;
 
-    @Column(name = "file_path", length = 512)
-    private String filePath;
+    @Column(name = "file_name", length = 128)
+    private String fileName;
 
+    // TODO file field
 }
