@@ -1,6 +1,7 @@
 package com.gptp.jirawebapp.components.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.gptp.jirawebapp.components.project.ProjectDto;
 import com.gptp.jirawebapp.data.*;
 import jakarta.persistence.*;
@@ -29,7 +30,7 @@ public class UserDto {
 
     @Column(name = "password", length = 256)
     @NotBlank
-    @JsonIgnore
+    @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
 
     @Column(name= "first_name")

@@ -4,6 +4,7 @@ import com.gptp.jirawebapp.components.user.UserDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
@@ -23,6 +24,7 @@ public class Attachment {
     @JoinColumn(name = "creator_id")
     private UserDto creator;
 
+    @EqualsAndHashCode.Exclude
     @ManyToOne
     @JoinColumn(name = "issue_id")
     private Issue issue;
@@ -31,7 +33,8 @@ public class Attachment {
     @Column(name = "upload_date")
     private Date uploadDate;
 
-    @Column(name = "file_path", length = 512)
-    private String filePath;
+    @Column(name = "file_name", length = 128)
+    private String fileName;
 
+    // TODO file field
 }
