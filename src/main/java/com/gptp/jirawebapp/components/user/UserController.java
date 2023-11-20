@@ -65,6 +65,12 @@ public class UserController {
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<?> get(@PathVariable String email) {
+        UserDto user = repository.findByEmail(email);
+        return ResponseEntity.ok(user);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody UserDto data) {
         UserDto user = repository.findById(id).orElseThrow();
