@@ -1,5 +1,6 @@
 package com.gptp.jirawebapp.components.issue;
 
+import com.gptp.jirawebapp.data.IssueStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,6 @@ public class IssueDto {
     private Long assigneeId;
 
     @NonNull
-    private String status;
+    private IssueStatus status;
 
 }

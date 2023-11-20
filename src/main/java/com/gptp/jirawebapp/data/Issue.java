@@ -49,8 +49,9 @@ public class Issue {
     @JoinColumn(name = "assignee_id")
     private UserDto assignee;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private IssueStatus status;
 
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
