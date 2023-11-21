@@ -52,4 +52,13 @@ public class IssueController {
     public ResponseEntity<?> delete(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(service.delete(id));
     }
+
+    @GetMapping("/{id}/issues/info")
+    public ResponseEntity<?> readIssues(@PathVariable(name = "id") Long id) {
+        try {
+            return ResponseEntity.ok(service.readIssues(id));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
