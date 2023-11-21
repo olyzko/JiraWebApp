@@ -52,7 +52,7 @@ public class IssueService {
         return "OK";
     }
 
-    public List<AttachmentInfoData> readIssues(Long id) {
+    public List<AttachmentInfoData> readAttachmentsInfo(Long id) {
         List<Object[]> resultList = attachmentRepository.findInfoListByIssueId(id);
 
         return resultList.stream()
