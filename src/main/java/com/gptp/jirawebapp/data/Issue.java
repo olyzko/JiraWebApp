@@ -1,5 +1,7 @@
 package com.gptp.jirawebapp.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.gptp.jirawebapp.components.comment.CommentDto;
 import com.gptp.jirawebapp.components.project.ProjectDto;
 import com.gptp.jirawebapp.components.user.UserDto;
 import jakarta.persistence.*;
@@ -58,6 +60,7 @@ public class Issue {
     private Set<Attachment> attachments = new HashSet<>();
 
     @EqualsAndHashCode.Exclude
+    @JsonBackReference
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
-    private Set<Comment> comments = new HashSet<>();
+    private Set<CommentDto> comments = new HashSet<>();
 }

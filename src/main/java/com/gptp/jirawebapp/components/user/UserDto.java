@@ -1,7 +1,9 @@
 package com.gptp.jirawebapp.components.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.gptp.jirawebapp.components.comment.CommentDto;
 import com.gptp.jirawebapp.components.project.ProjectDto;
 import com.gptp.jirawebapp.data.*;
 import jakarta.persistence.*;
@@ -51,6 +53,7 @@ public class UserDto {
     @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
     private Set<Attachment> attachments = new HashSet<>();
 
+    @JsonBackReference
     @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
-    private Set<Comment> comments = new HashSet<>();
+    private Set<CommentDto> comments = new HashSet<>();
 }

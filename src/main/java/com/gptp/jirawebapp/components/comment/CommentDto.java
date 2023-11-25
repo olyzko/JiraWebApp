@@ -1,10 +1,11 @@
-package com.gptp.jirawebapp.data;
+package com.gptp.jirawebapp.components.comment;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gptp.jirawebapp.components.user.UserDto;
+import com.gptp.jirawebapp.data.Issue;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
@@ -14,7 +15,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
+public class CommentDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +26,12 @@ public class Comment {
     private Date creationDate;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "creator_id")
     private UserDto creator;
 
-    @EqualsAndHashCode.Exclude
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "issue_id")
     private Issue issue;
 
