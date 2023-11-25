@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +47,19 @@ public class AttachmentService {
     public byte[] readFile(Long id) throws EntityNotFoundException {
         Attachment attachment = attachmentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         return attachment.getFile();
+    }
+
+    public List<AttachmentInfoData> readByIssue(Long id) {
+        List<Object[]> resultList = attachmentRepository.findInfoListByIssueId(id);
+        return resultList.stream()
+                .map(objects -> new AttachmentInfoData(
+                        (Long) objects[0], // id
+                        (Long) objects[1], // creatorId
+                        (Long) objects[2], // issueId
+                        (Date) objects[3], // uploadDate
+                        (String) objects[4] // fileName
+                ))
+                .collect(Collectors.toList());
     }
 
     public String delete(Long id) throws EntityNotFoundException {
