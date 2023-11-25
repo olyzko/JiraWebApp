@@ -4,6 +4,7 @@ import com.gptp.jirawebapp.components.project.ProjectDto;
 import com.gptp.jirawebapp.components.user.UserDto;
 import com.gptp.jirawebapp.data.Attachment;
 import com.gptp.jirawebapp.data.Comment;
+import com.gptp.jirawebapp.data.IssueStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,7 +34,7 @@ public class SavedIssueDto {
 
     private UserDto assignee;
 
-    private String status;
+    private IssueStatus status;
 
     private Set<Attachment> attachments;
 

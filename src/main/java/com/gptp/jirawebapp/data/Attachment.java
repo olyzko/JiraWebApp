@@ -2,16 +2,15 @@ package com.gptp.jirawebapp.data;
 
 import com.gptp.jirawebapp.components.user.UserDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "attachment")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Attachment {
@@ -30,11 +29,13 @@ public class Attachment {
     private Issue issue;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "upload_date")
     private Date uploadDate;
 
     @Column(name = "file_name", length = 128)
     private String fileName;
 
-    // TODO file field
+    @Column(name = "file", length = 128)
+    private byte[] file;
 }
