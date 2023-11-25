@@ -1,6 +1,6 @@
 package com.gptp.jirawebapp.data;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gptp.jirawebapp.components.comment.CommentDto;
 import com.gptp.jirawebapp.components.project.ProjectDto;
 import com.gptp.jirawebapp.components.user.UserDto;
@@ -57,10 +57,11 @@ public class Issue {
 
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Attachment> attachments = new HashSet<>();
 
     @EqualsAndHashCode.Exclude
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
     private Set<CommentDto> comments = new HashSet<>();
 }

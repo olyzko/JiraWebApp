@@ -1,5 +1,6 @@
 package com.gptp.jirawebapp.components.project;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gptp.jirawebapp.components.user.UserDto;
 import com.gptp.jirawebapp.data.Issue;
 import jakarta.persistence.*;
@@ -45,5 +46,6 @@ public class ProjectDto {
     private Date endDate;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Issue> issues = new HashSet<>();
 }
