@@ -52,6 +52,15 @@ public class AttachmentController {
         }
     }
 
+    @GetMapping("/issue/{id}")
+    public ResponseEntity<?> readByIssue(@PathVariable(name = "id") Long id) {
+        try {
+            return ResponseEntity.ok(service.readByIssue(id));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(service.delete(id));
