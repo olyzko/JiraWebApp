@@ -98,4 +98,12 @@ public class IssueService {
                 .comments(issue.getComments())
                 .build();
     }
+
+    public List<IssueDto> listByProject(Long projectId) {
+        return issueRepository.findAllByProject(projectId);
+    }
+
+    public List<IssueDto> listByAssignee(Long userId) {
+        return issueRepository.findAllByAssignee(userId);
+    }
 }

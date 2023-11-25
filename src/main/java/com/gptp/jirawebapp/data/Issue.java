@@ -60,8 +60,4 @@ public class Issue {
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
     private Set<Comment> comments = new HashSet<>();
-
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
-    private Set<IssueUser> issueUsers = new HashSet<>();
 }

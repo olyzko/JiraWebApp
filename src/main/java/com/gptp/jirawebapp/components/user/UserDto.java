@@ -53,7 +53,4 @@ public class UserDto {
 
     @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
     private Set<Comment> comments = new HashSet<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<IssueUser> issueUsers = new HashSet<>();
 }

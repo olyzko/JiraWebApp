@@ -34,6 +34,16 @@ public class IssueController {
         }
     }
 
+    @GetMapping("/project/{id}")
+    public ResponseEntity<?> listByProject(@PathVariable(name = "id") Long projectId) {
+        return ResponseEntity.ok(service.listByProject(projectId));
+    }
+
+    @GetMapping("/assignee/{id}")
+    public ResponseEntity<?> listByAssignee(@PathVariable(name = "id") Long userId) {
+        return ResponseEntity.ok(service.listByAssignee(userId));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable(name = "id") Long id,
