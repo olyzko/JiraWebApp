@@ -66,8 +66,8 @@ public class ProjectController {
     public ResponseEntity<?> getUsers(@PathVariable Long id) {
         List<ProjectUserDto> projectUserRoles = projectUserRepository.findByProjectId(id);
 
-        List<UserDto> users = projectUserRoles.stream()
-                .map(ProjectUserDto::getUser)
+        List<UserWithRole> users = projectUserRoles.stream()
+                .map((dto) -> new UserWithRole(dto.getUser(), dto.getRole()))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(users);
