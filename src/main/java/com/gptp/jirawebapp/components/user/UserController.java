@@ -21,22 +21,16 @@ public class UserController {
     private final UserRepository repository;
     private final ProjectUserRepository projectUserRepository;
     private final JWT jwt;
+    private final UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserDto user) {
-        // Check if the username already exists
-        if (repository.findByEmail(user.getEmail()) != null) {
-            return ResponseEntity.badRequest().body("Email already taken");
+        try {
+            userService.registerUser(user);
+            return ResponseEntity.ok("User registered successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        // Hash the user's password using BCrypt
-        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-        user.setPassword(hashedPassword);
-
-        // Save the user to the database
-        repository.save(user);
-
-        return ResponseEntity.ok("User registered successfully");
     }
 
     @PostMapping("/login")
