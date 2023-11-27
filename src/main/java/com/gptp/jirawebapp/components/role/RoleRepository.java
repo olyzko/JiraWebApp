@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface RoleRepository extends JpaRepository<RoleDto, Long> {
 
-    @Query(value = "SELECT RoleDto.id FROM RoleDto WHERE RoleDto.name='Owner'")
+    @Query(value = "SELECT id FROM role WHERE role.name='Owner'", nativeQuery = true)
     Optional<Long> findOwnerRoleId();
 }
