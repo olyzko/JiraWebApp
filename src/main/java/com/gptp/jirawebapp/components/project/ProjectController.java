@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping("/api/project")
 @AllArgsConstructor
@@ -12,9 +14,11 @@ public class ProjectController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable Long id) {
-        return projectService.getProjectById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.badRequest().build());
+        try {
+            return ResponseEntity.ok(projectService.getProjectById(id));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping

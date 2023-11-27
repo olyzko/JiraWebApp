@@ -13,7 +13,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,12 +35,18 @@ public class ProjectService {
         this.jwt = jwt;
     }
 
-    public Optional<ProjectDto> getProjectById(Long id) {
-        return repository.findById(id);
+    public ProjectWithAccess getProjectById(Long id) {
+        JWTContent context = jwt.context();
+        Long userId = context.getUserId();
+        ProjectDto projectDto = repository.findById(id).orElseThrow();
+        Long ownerRoleId = roleRepository.findOwnerRoleId().orElseThrow();
+        boolean canModify = projectUserRepository.findByProjectIdAndUserId(id, userId).stream()
+                .anyMatch(dto -> dto.getRole().getId().equals(ownerRoleId));
+        return new ProjectWithAccess(projectDto, canModify);
     }
 
     @Transactional
-    public ProjectDto createProject(ProjectDto project) {
+    public ProjectWithAccess createProject(ProjectDto project) {
         JWTContent context = jwt.context();
         Long userId = context.getUserId();
         UserDto user = userRepository.findById(userId).orElseThrow();
@@ -53,7 +58,7 @@ public class ProjectService {
                 .roleId(roleId)
                 .build();
         addUserToProject(savedProject.getId(), data);
-        return savedProject;
+        return new ProjectWithAccess(savedProject, true);
     }
 
     public ProjectDto updateProject(Long id, ProjectDto data) {
