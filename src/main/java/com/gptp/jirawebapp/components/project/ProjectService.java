@@ -9,6 +9,7 @@ import com.gptp.jirawebapp.components.user.UserDto;
 import com.gptp.jirawebapp.components.user.UserRepository;
 import com.gptp.jirawebapp.utilities.JWT;
 import com.gptp.jirawebapp.utilities.JWTContent;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,12 +40,20 @@ public class ProjectService {
         return repository.findById(id);
     }
 
+    @Transactional
     public ProjectDto createProject(ProjectDto project) {
         JWTContent context = jwt.context();
         Long userId = context.getUserId();
         UserDto user = userRepository.findById(userId).orElseThrow();
         project.setCreator(user);
-        return repository.save(project);
+        ProjectDto savedProject = repository.save(project);
+        Long roleId = roleRepository.findOwnerRoleId().orElseThrow();
+        ProjectAddUserData data = ProjectAddUserData.builder()
+                .userId(userId)
+                .roleId(roleId)
+                .build();
+        addUserToProject(savedProject.getId(), data);
+        return savedProject;
     }
 
     public ProjectDto updateProject(Long id, ProjectDto data) {
